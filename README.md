@@ -66,6 +66,9 @@ VITE_OPENCAGE_API_KEY=your_opencage_api_key_here
 - [OpenCage API](https://opencagedata.com/api#quickstart)
 - [React Speech Recognition](https://www.npmjs.com/package/react-speech-recognition)
 
+## Manual:
+Click the "Start Recording" button. The app will ask for permission to access your microphone and location. Once you allow both, it will start listening to your voice and convert it into text.
+Gemini AI will automatically clean the text by removing slang and correcting any grammar mistakes. The final message, along with your location, is saved in localStorage.
 
 ## Screenshot 
 ![Screenshot 2025-07-09 174046](https://github.com/user-attachments/assets/c7fb48d0-a6f5-4253-b156-1d1951961bec)
@@ -76,4 +79,6 @@ VITE_OPENCAGE_API_KEY=your_opencage_api_key_here
 
 ![Screenshot 2025-07-09 172652](https://github.com/user-attachments/assets/8beb0ad0-074c-433c-a6ef-c05089233b13)
 
-
+## Future Implementation
+Optimize the application
+Add authentication and more features...
