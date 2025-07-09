@@ -86,4 +86,5 @@ Gemini AI will automatically clean the text by removing slang and correcting any
 ## Future Implementation
 1. Optimize the application
 2. UI enhancement
-3. Add authentication and more features...
+3. Allow users to upload images or documents with their voice message 
+4. Add authentication and more features...
