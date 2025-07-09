@@ -80,5 +80,6 @@ Gemini AI will automatically clean the text by removing slang and correcting any
 ![Screenshot 2025-07-09 172652](https://github.com/user-attachments/assets/8beb0ad0-074c-433c-a6ef-c05089233b13)
 
 ## Future Implementation
-Optimize the application
-Add authentication and more features...
+1. Optimize the application
+2. UI enhancement
+3. Add authentication and more features...
