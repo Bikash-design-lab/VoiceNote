@@ -25,6 +25,7 @@ VITE_OPENCAGE_API_KEY=your_opencage_api_key_here
 - **Gemini API**: [Google AI Studio](https://aistudio.google.com/)
 - **OpenCage API**: [OpenCage Data](https://opencagedata.com/api#quickstart)
 
+# Run VoiceNote locally
 
 ## Clone the repository
 ```
