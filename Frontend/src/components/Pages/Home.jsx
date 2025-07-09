@@ -19,7 +19,7 @@ const Home = () => {
   const [networkType, setNetworkType] = useState('');
   const [speedKBps, setSpeedKBps] = useState(null);
 
-  const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition,} = useSpeechRecognition();
+  const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition} = useSpeechRecognition();
 
   // Check browser support
   if (!browserSupportsSpeechRecognition) {
@@ -85,9 +85,21 @@ const Home = () => {
   }, []);
 
   // Start listening to voice
-  const startListening = () => {
-    geoLocation()
-    SpeechRecognition.startListening({ continuous: true, language: 'en-IN' });
+  // const startListening = async() => {
+  //   geoLocation()
+  //   await navigator.mediaDevices.getUserMedia({ audio: true });
+  //   SpeechRecognition.startListening({ continuous: true, language: 'en-IN' });
+  // };
+  const startListening = async () => {
+    geoLocation();
+    try {
+      // 🔐 Trigger browser mic permission prompt explicitly
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+      SpeechRecognition.startListening({ continuous: true, language: 'en-IN' });
+    } catch (error) {
+      console.error('Mic permission denied:', error);
+      alert('🎤 Please allow microphone access to use speech recognition.');
+    }
   };
 
   return (
