@@ -25,6 +25,24 @@ VITE_OPENCAGE_API_KEY=your_opencage_api_key_here
 - **Gemini API**: [Google AI Studio](https://aistudio.google.com/)
 - **OpenCage API**: [OpenCage Data](https://opencagedata.com/api#quickstart)
 
+
+# Clone the repository
+```
+git clone https://github.com/Bikash-design-lab/VoiceNote.git
+```
+# Navigate to the frontend folder
+```
+cd VoiceNote/Frontend
+```
+# Install dependencies
+```
+npm install
+```
+# Start the development server
+```
+npm run dev
+```
+
 ## 🎯 Features
 
 - **Voice Recording**: Speech-to-text using react-speech-recognition
@@ -88,3 +106,6 @@ Gemini AI will automatically clean the text by removing slang and correcting any
 2. UI enhancement
 3. Allow users to upload images or documents with their voice message 
 4. Add authentication and more features...
+
+
+ 
