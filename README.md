@@ -65,3 +65,15 @@ VITE_OPENCAGE_API_KEY=your_opencage_api_key_here
 - [MDN Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API)
 - [OpenCage API](https://opencagedata.com/api#quickstart)
 - [React Speech Recognition](https://www.npmjs.com/package/react-speech-recognition)
+
+
+## Screenshot 
+![Screenshot 2025-07-09 174046](https://github.com/user-attachments/assets/c7fb48d0-a6f5-4253-b156-1d1951961bec)
+
+
+![Screenshot 2025-07-09 174104](https://github.com/user-attachments/assets/40a2f449-fe28-40ca-8c87-f547aff0e68a)
+
+
+![Screenshot 2025-07-09 172652](https://github.com/user-attachments/assets/8beb0ad0-074c-433c-a6ef-c05089233b13)
+
+
