@@ -2,7 +2,9 @@
 
 A voice recording application with AI-powered text processing and location tracking.
  
-# (Deployed Link):[https://voice-note-3d8b.vercel.app/]
+# Deployed Link  
+[Click here to view the app](https://voice-note-3d8b.vercel.app/)
+
 
 ## 📦 Installation
 
