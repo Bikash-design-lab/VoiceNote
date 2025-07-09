@@ -26,19 +26,19 @@ VITE_OPENCAGE_API_KEY=your_opencage_api_key_here
 - **OpenCage API**: [OpenCage Data](https://opencagedata.com/api#quickstart)
 
 
-# Clone the repository
+## Clone the repository
 ```
 git clone https://github.com/Bikash-design-lab/VoiceNote.git
 ```
-# Navigate to the frontend folder
+## Navigate to the frontend folder
 ```
 cd VoiceNote/Frontend
 ```
-# Install dependencies
+## Install dependencies
 ```
 npm install
 ```
-# Start the development server
+## Start the development server
 ```
 npm run dev
 ```
