@@ -9,7 +9,6 @@ import Navbar from './components/Common/Navbar'
 // import './App.css'
 
 function App() {
-
   return (
     <>
       <Navbar/>
