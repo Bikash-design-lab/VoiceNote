@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { fetchLocationName } from '../Hooks/OpenCage';
 import '../Styles/Home.css';
-import MessageNote from './messageNote';
+import MessageNote from './MessageNote';
 
 const Home = () => {
   // Location
