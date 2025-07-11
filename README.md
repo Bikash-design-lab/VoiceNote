@@ -94,6 +94,7 @@ Click the "Start Recording" button. The app will ask for permission to access yo
 Gemini AI will automatically clean the text by removing slang and correcting any grammar mistakes. The final message, along with your location, is saved in localStorage.
 
 # Screenshot 
+
 ## User Interface
 <img width="1900" height="869" alt="Screenshot 2025-07-11 193526" src="https://github.com/user-attachments/assets/d212b83b-b58a-46aa-a28b-8882f060715c" />
 ##  Allow microphone and location permissions
