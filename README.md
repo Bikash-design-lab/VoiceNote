@@ -94,14 +94,16 @@ Click the "Start Recording" button. The app will ask for permission to access yo
 Gemini AI will automatically clean the text by removing slang and correcting any grammar mistakes. The final message, along with your location, is saved in localStorage.
 
 # Screenshot 
-<img width="1900" height="869" alt="Screenshot 2025-07-11 193526" src="https://github.com/user-attachments/assets/d212b83b-b58a-46aa-a28b-8882f060715c" />
 ## User Interface
-<img width="1892" height="901" alt="Screenshot 2025-07-11 193553" src="https://github.com/user-attachments/assets/4055f83e-054e-4acd-84e6-41977766ff7e" />
+<img width="1900" height="869" alt="Screenshot 2025-07-11 193526" src="https://github.com/user-attachments/assets/d212b83b-b58a-46aa-a28b-8882f060715c" />
 ##  Allow microphone and location permissions
-<img width="1895" height="860" alt="Screenshot 2025-07-11 193654" src="https://github.com/user-attachments/assets/f6cd4268-f7e2-47de-b115-5e08fff4743b" />
+<img width="1892" height="901" alt="Screenshot 2025-07-11 193553" src="https://github.com/user-attachments/assets/4055f83e-054e-4acd-84e6-41977766ff7e" />
 ## My voice messages will be converted to text 
-<img width="1897" height="856" alt="Screenshot 2025-07-11 193713" src="https://github.com/user-attachments/assets/94340aed-8336-4554-bca3-4595ad50da8a" />
+<img width="1895" height="860" alt="Screenshot 2025-07-11 193654" src="https://github.com/user-attachments/assets/f6cd4268-f7e2-47de-b115-5e08fff4743b" />
 ## Users are allowed to edit and delete messages
+<img width="1897" height="856" alt="Screenshot 2025-07-11 193713" src="https://github.com/user-attachments/assets/94340aed-8336-4554-bca3-4595ad50da8a" />
+## VoiceNote
+<img width="1880" height="862" alt="Screenshot 2025-07-11 210958" src="https://github.com/user-attachments/assets/3c60e424-a021-415d-a32d-8223f88aa448" />
 
 ## Future Implementation
 1. Optimize the application
