@@ -1,32 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { fetchLocationName } from '../Hooks/OpenCage';
-import '../Styles/Home.css'
-
-import MessageNote from '../Pages/MessageNote'
+import '../Styles/Home.css';
+import MessageNote from './messageNote';
 
 const Home = () => {
-  // store longitude and latitude
+  // Location
   const [longitude, setLongitude] = useState(null);
   const [latitude, setLatitude] = useState(null);
   const [statusGeoLocation, setStatusGeoLocation] = useState('');
-
-  // store location name
   const [locationName, setLocationName] = useState('');
   const [locationLoading, setLocationLoading] = useState(false);
 
-  //  store network status and speed
+  // Network
   const [networkType, setNetworkType] = useState('');
   const [speedKBps, setSpeedKBps] = useState(null);
 
-  const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition} = useSpeechRecognition();
+  // Recording
+  const [isPaused, setIsPaused] = useState(false);
+  const [sessionTranscript, setSessionTranscript] = useState('');
+  const [isSessionActive, setIsSessionActive] = useState(false);
+  const [currentTranscript, setCurrentTranscript] = useState('');
 
-  // Check browser support
-  if (!browserSupportsSpeechRecognition) {
-    return <p>❌ Your browser doesn't support speech recognition.</p>;
-  }
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition,
+  } = useSpeechRecognition({ continuous: true });
 
-  // Get user's co-ordinates useing geolocation
+  // Geolocation
   const geoLocation = () => {
     if (!navigator.geolocation) {
       setStatusGeoLocation('❌ Geolocation is not supported by your browser.');
@@ -50,7 +53,7 @@ const Home = () => {
     );
   };
 
-  // Fetch human-readable location from coordinates useing OpenCage API
+  // Fetch readable location
   useEffect(() => {
     if (longitude && latitude) {
       setLocationLoading(true);
@@ -60,15 +63,14 @@ const Home = () => {
     }
   }, [longitude, latitude]);
 
-  // Track network type and speed
+  // Network Info
   useEffect(() => {
     if ('connection' in navigator) {
       const connection = navigator.connection;
 
       const updateNetworkInfo = () => {
         setNetworkType(connection.effectiveType);
-        // conver it into kb
-        const kbps = connection.downlink * 1000 / 8;
+        const kbps = (connection.downlink * 1000) / 8;
         setSpeedKBps(kbps.toFixed(2));
       };
 
@@ -84,67 +86,166 @@ const Home = () => {
     }
   }, []);
 
-  // Start listening to voice
-  // const startListening = async() => {
-  //   geoLocation()
-  //   await navigator.mediaDevices.getUserMedia({ audio: true });
-  //   SpeechRecognition.startListening({ continuous: true, language: 'en-IN' });
-  // };
+  // Update transcript management
+  useEffect(() => {
+    if (isSessionActive && !isPaused && transcript) {
+      // Append new transcript to current transcript
+      setCurrentTranscript(prev => {
+        const newTranscript = prev ? `${prev} ${transcript}` : transcript;
+        console.log('Current transcript:', newTranscript); // Debug log
+        return newTranscript;
+      });
+      resetTranscript(); // Clear the temporary transcript
+    }
+  }, [transcript, isSessionActive, isPaused]);
+
+  // Start voice session
   const startListening = async () => {
     geoLocation();
     try {
-      // 🔐 Trigger browser mic permission prompt explicitly
       await navigator.mediaDevices.getUserMedia({ audio: true });
       SpeechRecognition.startListening({ continuous: true, language: 'en-IN' });
+      setIsSessionActive(true);
+      setIsPaused(false);
+      setCurrentTranscript(''); // Clear current transcript
+      setSessionTranscript(''); // Clear session transcript
     } catch (error) {
       console.error('Mic permission denied:', error);
       alert('🎤 Please allow microphone access to use speech recognition.');
     }
   };
 
+  const pauseListening = () => {
+    SpeechRecognition.stopListening();
+    setIsPaused(true);
+    // Don't save to session transcript yet, keep current transcript as is
+  };
+
+  const resumeListening = () => {
+    SpeechRecognition.startListening({ continuous: true, language: 'en-IN' });
+    setIsPaused(false);
+    // Continue with existing currentTranscript
+  };
+
+  const finishSession = () => {
+    SpeechRecognition.stopListening();
+    // Save the complete transcript
+    setSessionTranscript(currentTranscript.trim());
+    setCurrentTranscript('');
+    setIsSessionActive(false);
+    setIsPaused(false);
+  };
+
+  const handleReset = () => {
+    resetTranscript();
+    setSessionTranscript('');
+    setCurrentTranscript('');
+    setIsSessionActive(false);
+    setIsPaused(false);
+  };
+
+  const updateMessage = (newMessage) => {
+    localStorage.setItem('homeMessage', newMessage);
+    setSessionTranscript(newMessage);
+  };
+
+  const deleteMessage = () => {
+    localStorage.removeItem('homeMessage');
+    setSessionTranscript('');
+  };
+
+  // Check browser support early
+  if (!browserSupportsSpeechRecognition) {
+    return <p>❌ Your browser doesn't support speech recognition.</p>;
+  }
+
   return (
     <div className="home-container">
-  <h1 className="home-heading">Welcome User</h1>
+      <h1 className="home-heading">Welcome User</h1>
 
-  <div className="home-main">
-    
-    {/* <div className="card-column"> */}
-      <div className="card">
-        <h4>📌 Get User Location</h4>
-        {/* <button onClick={geoLocation} className="location-button">Get Location</button> */}
-        <p style={{ fontSize: '15px' }}>
-          {locationLoading
-            ? '🔄 Fetching address...'
-            : locationName
+      <div className="home-main">
+        {/* Location */}
+        <div className="card">
+          <h4>📌 Get User Location</h4>
+          <p style={{ fontSize: '15px' }}>
+            {locationLoading
+              ? '🔄 Fetching address...'
+              : locationName
               ? `📍 ${locationName}`
               : '📍 No location available'}
-        </p>
-        <p className="status-text">{statusGeoLocation}</p>
+          </p>
+          <p className="status-text">{statusGeoLocation}</p>
+        </div>
+
+        {/* Network */}
+        <div className="card">
+          <h4>🌐 Network Info</h4>
+          <p><strong>Type:</strong> {networkType}</p>
+          <p><strong>Speed:</strong> {speedKBps ? `${speedKBps} KB/s` : 'Unknown'}</p>
+        </div>
+
+        {/* Voice Note Section */}
+        <div className="voice-note-container">
+          <p>🎤 Voice Listening: {listening ? '🎙️ Yes' : '⛔ No'}</p>
+
+          {/* Buttons */}
+          <div className="voice-note-buttons">
+            {!isSessionActive ? (
+              <button 
+                onClick={startListening}
+                style={{ backgroundColor: '#4CAF50' }}
+              >
+                Start Recording
+              </button>
+            ) : (
+              <>
+                {isPaused ? (
+                  <button 
+                    onClick={resumeListening}
+                    style={{ backgroundColor: '#2196F3' }}
+                  >
+                    Resume
+                  </button>
+                ) : (
+                  <button 
+                    onClick={pauseListening}
+                    style={{ backgroundColor: '#FFC107' }}
+                  >
+                    Pause
+                  </button>
+                )}
+                <button 
+                  onClick={finishSession}
+                  style={{ backgroundColor: '#4CAF50' }}
+                >
+                  Done
+                </button>
+              </>
+            )}
+            <button 
+              onClick={handleReset}
+              style={{ backgroundColor: '#f44336' }}
+            >
+              Reset
+            </button>
+          </div>
+
+          {isSessionActive && (
+            <p style={{ fontSize: '14px', color: '#666' }}>
+              {isPaused ? '⏸️ Recording paused' : '⏺️ Recording in progress...'}
+            </p>
+          )}
+        </div>
       </div>
 
-      <div className="card">
-        <h4>🌐 Network Info</h4>
-        <p><strong>Type:</strong> {networkType}</p>
-        <p><strong>Speed:</strong> {speedKBps ? `${speedKBps} KB/s` : 'Unknown'}</p>
-      </div>
-    {/* </div> */}
-    <div className="voice-note-container">
-        <p>🎤 Voice Listening: {listening ? '🎙️ Yes' : '⛔ No'}</p>
-        <div className="voice-note-buttons">
-          <button onClick={startListening}>Start Recording</button>
-          <button onClick={SpeechRecognition.stopListening}>Stop Recording</button>
-          <button onClick={resetTranscript}>Reset</button>
-        </div>
+      {/* Final Transcript */}
+      <MessageNote 
+        transcript={sessionTranscript} 
+        locationName={locationName}
+        isRecording={isSessionActive && !isPaused}
+      />
     </div>
-      
-  </div>
-  <MessageNote transcript ={transcript} locationName={locationName} />
-   {/* <div className='text-area-note'>
-     <textarea value={transcript} />
-    </div> */}
-</div>
   );
 };
 
 export default Home;
-
